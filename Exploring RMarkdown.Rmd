@@ -1,0 +1,27 @@
+---
+title: "Exploring RMarkdown"
+author: "Garrett B. Lucas"
+date: "1/20/2022"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tibble)
+```
+
+```{r}
+mtcars_tbl <- as_tibble(mtcars, rownames = "model")
+
+mtcars
+mtcars_tbl
+
+knitr::kable(mtcars_tbl)
+
+```
+

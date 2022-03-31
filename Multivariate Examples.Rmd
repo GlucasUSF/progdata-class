@@ -1,0 +1,50 @@
+---
+title: "Multivariate Pivoting"
+author: "Garrett B. Lucas"
+date: "2/22/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+ fam_dat <- tribble(
+  ~family,  ~dob_child1,  ~dob_child2, ~gender_child1, ~gender_child2,
+       1L, "1998-11-26", "2000-01-29",             1L,             2L,
+       2L, "1996-06-22",           NA,             2L,             NA,
+       3L, "2002-07-11", "2004-04-05",             2L,             2L,
+       4L, "2004-10-10", "2009-08-27",             1L,             1L,
+       5L, "2000-12-05", "2005-02-28",             2L,             1L,
+)
+fam_dat <- fam_dat |> mutate_at(vars(starts_with("dob")), parse_date)
+fam_dat
+```
+
+```{r}
+fam_dat |> 
+  pivot_longer(
+    cols = -family,
+    names_to = c(".value", "child"), 
+    names_sep = "_", 
+    values_drop_na = TRUE
+  )
+```
+
+```{r}
+fam_dat |> 
+  pivot_longer(
+    cols = -family,
+    names_to = c(".value", "child"), 
+    names_sep = "_", 
+    values_drop_na = TRUE
+  ) |> 
+  mutate(child = stringr::str_replace(child, "child", "")) |> 
+  mutate(child = as.integer(child))
+```
+
+```{r}
+
+```
+

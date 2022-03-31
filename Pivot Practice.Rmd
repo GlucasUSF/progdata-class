@@ -1,0 +1,13 @@
+```{r}
+(lotr_wide <- lotr |> 
+  pivot_wider(id_cols = c(-Species, -Words), 
+              names_from = Species, 
+              values_from = Words))
+```
+
+```{r}
+lotr_wide |>
+  pivot_longer(cols = c(Elf, Hobbit, Man),
+               names_to = "Species",
+               values_to = "Words" )
+```

@@ -1,0 +1,77 @@
+---
+title: "Joint Functions"
+author: "Garrett B. Lucas"
+date: "2/24/2022"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Data may be stored seperately, the following is used in order to join the data together.
+"Table Joins"
+
+Inner Join:
+Combines tables based on matching id columns. Keeps all columns but differs in which rows they keep. Information that doesn't match is dropped.
+
+inner_join(x, y, by = "id")
+
+Left Join:
+Keeps all columns but prioritizes the graph on the left side table. A value in the left table but not in the right will be included, but vice versa is still dropped. If there are multiple matches, then multiple rows form for each difference between them.
+
+left_join(x, y)
+"y_extra"?
+
+Right Join:
+Keeps all columns, and also keeps all of the rows from the right graph and the ones from the left graph that match with the data. Opposite to above, unmatching left data is dropped.
+
+right_join(x, y)
+
+Full Join:
+Keeps all columns and rows, fusing all data together into one large graph.
+
+full_join(x, y, by = "id")
+
+
+
+```{r}
+songs <- read_csv("https://raw.githubusercontent.com/bwiernik/progdata-class/master/data/singer/songs.csv")
+locations <- read_csv("https://raw.githubusercontent.com/bwiernik/progdata-class/master/data/singer/loc.csv")
+
+(time <- as_tibble(songs) |> 
+   rename(song = title))
+
+(album <- as_tibble(locations) |> 
+   select(title, everything()) |> 
+   rename(album = release,
+          song  = title))
+```
+
+```{r}
+time |>
+  full_join(album, by = c("artist_name", "song")
+  )
+```
+
+Artist name from both tables is mentioned as their own column, so in order to fix that, we add the code that says "artist_name" but also now im having errors... what?
+
+Filtering Joins:
+Excludes some rows that are mentioned.
+
+Semi Join:
+all rows from x are compared with y, and only ones that are in both, are included. Only columns from the original x chart are included.
+
+Anti Join:
+Keeps only rows that don't match from x with y.
+
+```{r}
+
+```
+
+
+
+
+

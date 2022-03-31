@@ -1,0 +1,70 @@
+---
+title: "File Input and Output"
+author: "Garrett B. Lucas"
+date: "3/1/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+How do we even get data into R in the first place?
+
+file.path() or here::here() for file pathway
+
+```{r}
+write_csv(gap_asia_2007, 
+          here::here("data", "gap_asia_2007.csv")
+)
+```
+
+Reading Data from Disk:
+
+```{r}
+dat <- read_csv(here::here("data", "gap_asia_2007.csv"))
+dat
+```
+
+cols function controls the types of columns. (Below is the same as above, but the columns are specified). Its always a good idea to be explicit and explain what type of variable each column is.
+Dbl- Numerical
+Chr- Non-Numerical
+
+```{r}
+dat <- read_csv(
+  here::here("data", "gap_asia_2007.csv"),
+  col_types = cols(
+    country = col_factor(),
+    continent = col_factor(),
+    year = col_date(format = "%Y"),
+    .default = col_double() # all other columns as numeric (double)
+  )
+)
+dat
+```
+
+Also include "na", or which values in the data should be considered na. Below considers blank cells, no response, and NA as na variables.
+
+```{r}
+dat <- read_csv(
+  here::here("data", "gap_asia_2007.csv"),
+  col_types = cols(
+    country = col_factor(),
+    continent = col_factor(),
+    year = col_date(format = "%Y"),
+    .default = col_double() # all other columns as numeric (double)
+  ),
+  na = c("", "NA", -99, "No response")
+)
+dat
+```
+
+1) File Path
+2) Types of Data
+3) NAs
+
+Excel being imported is simple with the readxl command. (dont trust excel with your data, use google sheets.)
+
+```{r}
+
+```

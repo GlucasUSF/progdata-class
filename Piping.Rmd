@@ -1,0 +1,25 @@
+```{r}
+install.packages(tidyverse)
+install.packages(gapminder)
+
+library(gapminder)
+library(tidyverse)
+```
+
+```{r}
+arrange(gapminder, year, lifeExp)
+```
+
+piping
+
+Tidyverse = %>%
+
+R = |>
+
+Shortcut= Cntrl Shift M
+
+```{r}
+gapminder %>%
+  select(year, lifeExp, country) %>%
+  arrange(year, lifeExp)
+```
